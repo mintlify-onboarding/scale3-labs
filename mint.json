@@ -2,24 +2,25 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation Starter Kit",
   "logo": {
-    "dark": "/logo/dark.png",
-    "light": "/logo/light.png"
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0069ED",
-    "light": "#4D9CFF",
-    "dark": "#0050B4"
+    "primary": "#BE63FF",
+    "light": "#D9A4FF",
+    "dark": "#391C4A",
+    "anchors": { "from": "#886BFE", "to": "#BE63FF" }
   },
   "topbarLinks": [
     {
-      "name": "Documentation",
-      "url": "https://mintlify.com/docs"
+      "name": "Log In",
+      "url": "https://auth.scale3labs.com/u/login?state=hKFo2SBJeDdUSzVxeUdTSkVUd2dIQnpNalFlWkRxNXZkRmZTcaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFdaN1hKazRSczVwSEpzM3QwVXhhY2FnU2N2VDB0d2xno2NpZNkgNXA1c1lSd2ZKdDU2aXliWVNXS2lTM1RPbjQyR2p0STc"
     }
   ],
   "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://github.com/mintlify/starter"
+    "name": "Sign Up",
+    "url": "https://auth.scale3labs.com/u/signup?state=hKFo2SA1Vk02MnBJWWF1UUhoVHRVWjhGOHRTSmljN0Y2S1JZUKFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIEtncmN3dXFRX0VJSkFCRVlCaHlBY0pHaExSTUxva0VJo2NpZNkgNXA1c1lSd2ZKdDU2aXliWVNXS2lTM1RPbjQyR2p0STc"
   },
   "anchors": [
     {
@@ -58,8 +59,8 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/Scale3Labs",
+    "discord": "https://discord.com/invite/h74CkNv4h9",
+    "website": "https://www.scale3labs.com/"
   }
 }
