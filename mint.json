@@ -24,19 +24,19 @@
   },
   "anchors": [
     {
-      "name": "API Reference",
-      "icon": "rectangle-terminal",
-      "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "https://mintlify.com"
+      "name": "Blog",
+      "icon": "medium",
+      "url": "https://medium.com/scale3-labs"
     },
     {
       "name": "Community",
       "icon": "discord",
-      "url": "https://mintlify.com/community"
+      "url": "https://discord.com/invite/h74CkNv4h9"
+    },
+    {
+      "name": "Contact Us",
+      "icon": "envelope",
+      "url": "mailto:contact@scale3labs.com"
     }
   ],
   "navigation": [
