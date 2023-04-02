@@ -12,7 +12,6 @@
     "dark": "#886bfe",
     "anchors": { "from": "#886BFE", "to": "#BE63FF" }
   },
-  "backgroundImage": "/background.png",
   "topbarLinks": [
     {
       "name": "Log In",
@@ -43,7 +42,11 @@
   "navigation": [
     {
       "group": "Node Checker",
-      "pages": ["introduction", "sui-node-checker"]
+      "pages": ["introduction", "nodechecker/sui-node-checker", "nodechecker/aptos-node-checker"]
+    },
+    {
+      "group": "Integrations",
+      "pages": ["integrations/firehydrant", "integrations/slack", "integrations/pagerduty"]
     }
   ],
   "footerSocials": {
