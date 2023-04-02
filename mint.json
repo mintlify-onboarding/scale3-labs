@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Documentation Starter Kit",
+  "name": "Scale3Labs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -12,6 +12,7 @@
     "dark": "#391C4A",
     "anchors": { "from": "#886BFE", "to": "#BE63FF" }
   },
+  "backgroundImage": "/background.png",
   "topbarLinks": [
     {
       "name": "Log In",
