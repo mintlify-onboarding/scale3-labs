@@ -1,0 +1,180 @@
+---
+title: 'SUI Node Checker'
+description: 'A SUI blockchain node utility to check the health of your blockchain node'
+---
+
+## Steps
+
+![Node Health](/images/sui-node-health.png)
+
+1. Insert the IP or DNS on the SUI node that you want to check.
+2. In most cases, the port is `9000`, to know your port check FAQs.
+3. Select the Network on which your node is running.
+4. Click the Check button to verify your node and wait for a few seconds.
+5. If your node has required RPC port open to public, you would see the Node `RPC` as _connected_.
+6. You can also compare your node's sui-node version to the version of the checker node.
+7. **Sync Status** shows how much your node is synced, and you can also see the node tip.
+8. **Average Sync** Speed shows the transactions synced by your node per second. This metric can be ignored as it's flaky sometimes. Use [Scale3 Autopilot](https://www.scale3labs.com/#autopilot) for accurate measurements.
+
+![Node Checker Results](/images/sui-node-checker-results.png)
+
+## Prerequisites
+
+- Make sure you have an SUI node running on the server or container.
+- RPC port(generally its 9000) should be open for the checker to query your SUI node.
+
+## FAQs
+
+<AccordionGroup>
+
+<Accordion title="Why is my node's TPS 0?">
+Even though your node is synced or syncing blocks fine, **having TPS to 0 is fine**.
+
+The tool only checks for the last few seconds, and it's quite possible in that time window there were no blocks.
+
+</Accordion>
+
+<Accordion title='I am getting the error: "Unable to reach your node. Please check your firewall settings.". What should I do?'>
+This error occurs when the checker is unable to reach your node. This is because the RPC port (9000) should be open to the public so the checker can run the required RPC checks.
+
+To debug it further run the following command on your local terminal to verify whether the port is open:
+
+Using Netcat
+
+```bash
+nc -vz <NODE IP/DNS> <RPC PORT>
+# Example
+nc -vz 10.0.1.1 9000
+
+# Output if port is open
+Connection to 10.0.1.1 port 9000 [tcp/cslistener] succeeded!
+# Output if port is not open
+nc: connectx to 10.0.1.1 port 9000 (tcp) failed: Connection refused
+```
+
+You can also use telnet to check
+
+```bash
+telnet <NODE IP/DNS> <RPC PORT>
+```
+
+Or run any of the following curl commands
+
+```bash
+curl --location --request POST '<NODE IP/DNS>:<RPC PORT>' --header 'Content-Type: application/json' --data-raw '{"jsonrpc":"2.0", "id":1,"method":"sui_getLatestCheckpointSequenceNumber"}'
+# Example
+curl --location --request POST 'https://fullnode.testnet.sui.io:443/' --header 'Content-Type: application/json' --data-raw '{"jsonrpc":"2.0", "id":1,"method":"sui_getLatestCheckpointSequenceNumber"}'
+
+# OR if you have enabled metrics
+curl <NODE IP/DNS>:9184/metrics
+```
+
+If non of the commands respond, which means there is some issue with your sui node process or you have not opened the port.
+
+</Accordion>
+
+<Accordion title='For "Your node is still syncing" message, do I need to take any action?'>
+
+No action is required.
+
+Just make sure the block tip number is always increasing indicating your node is healthy and syncing blocks fine. You verify that you can run the checker every few minutes.
+
+If you don't want to do the manual checks every time, you can onboard your node to [Scale3 Autopilot](https://www.scale3labs.com/#autopilot) and monitor the node's block height and TPS trend.
+
+</Accordion>
+
+<Accordion title='TPS is too low, is there a way I can improve?'>
+
+This can be due to the following reasons:
+
+- SUI network is generating blocks slowly, in this case, you don't need to do anything.
+- Your node specifications are below the recommended specifications, this will lead to your node falling behind the network. If that's the case, you should increase resources for your node.
+
+As per the official [doc](https://docs.sui.io/build/fullnode), these are the server specs
+
+- CPUs: 10 core
+- RAM: 32 GB
+- Storage (SSD): 2 TB
+
+If you want to analyze your server trends over a period of time, you can check out [Scale3 Autopilot](https://www.scale3labs.com/#autopilot) to gain more insights.
+
+</Accordion>
+
+<Accordion title='How do I know if my sui-node is running?'>
+
+To check if you have SUI node running, ssh to the server and make an RPC curl request to verify
+
+```bash
+curl --location --request POST '<NODE IP/DNS>:<RPC PORT>' --header 'Content-Type: application/json' --data-raw '{"jsonrpc":"2.0", "id":1,"method":"sui_getLatestCheckpointSequenceNumber"}'
+```
+
+If it's a docker/k8s setup, you can check if the pod or container is up and running fine.
+
+If its systemd setup, check if the sui-node service is up
+
+```curl
+systemctl status sui-node
+```
+
+We would highly recommend onboarding your node to [Scale3 Autopilot](https://www.scale3labs.com/#autopilot) and set up monitoring and alerts so you can easily debug when in need.
+
+</Accordion>
+
+<Accordion title='Why is Node Checker asking me to do a DB reset?'>
+
+The checker checks for your node block tip with the tip of the network, if it's too off, probably it can be due to two reasons:
+
+1. You have selected the wrong network when checking your node on Node Checker.
+2. There was a network reset or you are in an unsupported network.
+
+To fix your node, you can wipe your DB directories and restart the node.
+
+</Accordion>
+
+<Accordion title='What should I do for the "Your node is on a different version from SUI. Please update your node" error message?'>
+
+The sui-node version does not match the sui-node version used by the checker.
+
+You can update your sui-node to the right version by checking [releases](https://github.com/MystenLabs/sui/releases).
+
+<Warning>
+  Sometimes, it's possible that the checker is a minor version ahead of your
+  sui-node version, which is completely fine if there are no breaking network
+  changes.
+</Warning>
+
+</Accordion>
+
+<Accordion title='Getting "Unable to reach SUI devnet"'>
+
+This is due to the SUI community node being down or under maintenance.
+
+</Accordion>
+
+<Accordion title="What is my SUI node's RPC port?">
+
+**If you are running SUI node with systemd**
+
+you can check the sui command in service file. There you will find an argument `rpc-client-url` which has port.
+
+If service has `--config-file` argument, check the config file contents, `json-rpc-address` should have RPC port.
+
+If non present, assume default is 9000.
+
+**If you are running docker**
+
+run `docker ps` and you will see the port mapping.
+
+</Accordion>
+
+<Accordion title='I cannot keep my RPC port open to public, is there a specific IP I can allow?'>
+
+Yes! You can whitelist the following IPs for your RPC port. Though we do not guarantee it would always work, you can still try.
+
+- 34.168.21.71
+- 34.82.137.54
+- 35.199.188.63
+
+</Accordion>
+
+</AccordionGroup>
