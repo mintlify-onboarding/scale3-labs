@@ -47,6 +47,10 @@
     {
       "group": "Integrations",
       "pages": ["integrations/firehydrant", "integrations/slack", "integrations/pagerduty"]
+    },
+    {
+      "group": "Node Monitoring",
+      "pages": ["node-monitoring/introduction", "node-monitoring/push-method", "node-monitoring/pull-method"]
     }
   ],
   "footerSocials": {
